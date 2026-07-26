@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:pulse_monitor/core/ui_localized_texts/app_localizations/app_localizations.dart';
+import 'package:pulse_monitor/core/ui_localized_texts/app_localizations/txt.dart';
 import 'package:pulse_monitor/features/limits/presentation/limits_state.dart';
 import 'package:pulse_monitor/ui_components/buttons.dart';
 import 'package:pulse_monitor/ui_components/text_fields.dart';
 
-class LimitsView extends StatefulWidget {
-  const LimitsView({super.key});
+class LimitsView extends StatelessWidget {
+  final Txt txt;
+  
+  LimitsView({super.key, required this.txt});
 
-  @override
-  LimitsViewState createState() => LimitsViewState();
-}
-
-class LimitsViewState extends State<LimitsView> {
   HeartRateStatus status = HeartRateStatus.tooHigh;
 
   @override
@@ -28,7 +26,7 @@ class LimitsViewState extends State<LimitsView> {
               // TODO	add connection status indicator text + color
               const SizedBox(height: 40),
               TextFields.textField(
-                outerLabel: AppLocalizations.of(context)!.saved_limits,
+                outerLabel: txt.get.saved_limits,
                 labelPosition: LabelPosition.top,
               ),
               Row(
@@ -36,7 +34,7 @@ class LimitsViewState extends State<LimitsView> {
                 children: [
                   Buttons.rectangleButton(
                     context: context,
-                    text: AppLocalizations.of(context)!.button_save_limits,
+                    text: txt.get.button_save_limits,
                     onPressed: _saveLimits,
                   ),
                 ],
@@ -44,13 +42,13 @@ class LimitsViewState extends State<LimitsView> {
               //
               const SizedBox(height: 30),
               TextFields.textField(
-                outerLabel: AppLocalizations.of(context)!.upper_limit,
+                outerLabel: txt.get.upper_limit,
                 labelPosition: LabelPosition.top,
               ),
               //
               const SizedBox(height: 10),
               TextFields.textField(
-                outerLabel: AppLocalizations.of(context)!.lower_limit,
+                outerLabel: txt.get.lower_limit,
                 labelPosition: LabelPosition.top,
               ),
               //
@@ -71,7 +69,7 @@ class LimitsViewState extends State<LimitsView> {
                   Expanded(
                     child: Buttons.rectangleButton(
                       context: context,
-                      text: AppLocalizations.of(context)!.button_start,
+                      text: txt.get.button_start,
                       onPressed: _start,
                     ),
                   ),
@@ -79,7 +77,7 @@ class LimitsViewState extends State<LimitsView> {
                   Expanded(
                     child: Buttons.rectangleButton(
                       context: context,
-                      text: AppLocalizations.of(context)!.button_stop,
+                      text: txt.get.button_stop,
                       onPressed: _stop,
                     ),
                   ),
