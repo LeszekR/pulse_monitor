@@ -2,14 +2,23 @@ import 'package:pulse_monitor/features/ble_connection/domain/ble_connection_serv
 
 class BleConnectionServiceImpl implements BleConnectionService {
   @override
-  Stream<String> startDiscoveringDevices(){}
+  Stream<String> startDiscoveringDevices(){
+    // TODO: implement startDiscoveringDevices
+    throw UnimplementedError();
+  }
 
   @override
   void stopDiscoveringDevices(){}
 
   @override
-  bool connect(){}
+  bool connect(){
+    // TODO: implement connect
+    throw UnimplementedError();
+  }
 
   @override
-  bool disconnect(){}
+  bool disconnect(){
+    // TODO: implement disconnect
+    throw UnimplementedError();
+  }
 }

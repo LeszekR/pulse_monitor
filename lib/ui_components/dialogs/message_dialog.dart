@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_demo/common/config/app_sizes.dart';
-import 'package:flutter_demo/components/button_builder.dart';
-
-import '../../common/ui_localized_texts/txt.dart';
+import 'package:pulse_monitor/core/config/app_sizes.dart';
+import 'package:pulse_monitor/core/ui_localized_texts/app_localizations/txt.dart';
+import 'package:pulse_monitor/ui_components/button_builder.dart';
 import 'dialog_params.dart';
 
 class MessageDialog extends StatelessWidget {

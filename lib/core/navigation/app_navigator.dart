@@ -1,27 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:pulse_monitor/core/get_it.dart';
+import 'package:pulse_monitor/core/config/app_colors.dart';
 import 'package:pulse_monitor/core/ui_localized_texts/app_localizations/txt.dart';
+import 'package:pulse_monitor/features/ble_connection/navigation/ble_connection_navigator.dart';
+import 'package:pulse_monitor/features/ble_connection/presentation/ble_connection_view.dart';
+import 'package:pulse_monitor/features/limits/navigation/limits_navigator.dart';
+import 'package:pulse_monitor/features/limits/presentation/limits_view.dart';
 import 'package:pulse_monitor/ui_components/dialogs/dialog_factory.dart';
 import 'package:pulse_monitor/ui_components/dialogs/e_dialog_msg.dart';
+
 import 'navigation_command.dart';
 
 class AppNavigator {
   final Txt txt;
   final DialogFactory dialogFactory;
-  final MovieListNavigator movieListNavigator;
-  final TwoButtonNavigator twoButtonNavigator;
-  final SearchCriteriaNavigator searchCriteriaNavigator;
+  final BleConnectionNavigator bleConnectionNavigator;
+  final LimitsNavigator limitsNavigator;
 
-  AppNavigator(
-    this.txt,
-    this.dialogFactory,
-    this.movieListNavigator,
-    this.twoButtonNavigator,
-    this.searchCriteriaNavigator,
-  ) {
-    movieListNavigator.appNavigator = this;
-    twoButtonNavigator.appNavigator = this;
-    searchCriteriaNavigator.appNavigator = this;
+  AppNavigator(this.txt, this.dialogFactory, this.bleConnectionNavigator, this.limitsNavigator) {
+    bleConnectionNavigator.appNavigator = this;
+    limitsNavigator.appNavigator = this;
   }
 
   bool _isProgressVisible = false;
@@ -62,31 +59,19 @@ class AppNavigator {
     );
   }
 
-  void twoButtons(BuildContext context) {
+  void limits(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => TwoButtonsView(txt, twoButtonNavigator),
+        builder: (context) => LimitsView(txt: txt, appNavigator: this, navigator: limitsNavigator),
       ),
     );
   }
 
-  void searchCriteria(BuildContext context) {
+  void bleConnection(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => SearchCriteriaView(txt: txt, navigator: searchCriteriaNavigator),
-      ),
-    );
-  }
-
-  void movieList(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => MovieListView(
-          txt: txt,
-          appNavigator: this,
-          moviesNavigator: movieListNavigator,
-          scrollController: getIt<MovieListScrollController>(),
-        ),
+        builder: (context) =>
+            BleConnectionView(txt: txt, appNavigator: this, bleConnectionNavigator: bleConnectionNavigator),
       ),
     );
   }

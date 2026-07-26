@@ -1,8 +1,18 @@
 {
+  "ok": "OK",
+  "yes": "Yes",
+  "no": "No",
+  "cancel": "Cancel",
+  "dialog_title_error": "Error",
+
   "saved_limits": "Saved limits",
   "upper_limit": "Upper limit",
   "lower_limit": "Lower limit",
   "button_save_limits": "Save limits",
   "button_start": "Start",
-  "button_stop": "Stop"
+  "button_stop": "Stop",
+
+  "ble_permission_missing": "Missing permission to connect with Bluetooth",
+  "error_ble_connection_failed": "Bluetooth connection failed",
+  "ble_disconnected": "Bluetooth connection was disconnected"
 }

@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:pulse_monitor/core/ui_localized_texts/app_localizations/app_localizations.dart';
+import 'package:pulse_monitor/core/navigation/app_navigator.dart';
 import 'package:pulse_monitor/core/ui_localized_texts/app_localizations/txt.dart';
+import 'package:pulse_monitor/features/limits/navigation/limits_navigator.dart';
 import 'package:pulse_monitor/features/limits/presentation/limits_state.dart';
 import 'package:pulse_monitor/ui_components/buttons.dart';
 import 'package:pulse_monitor/ui_components/text_fields.dart';
 
 class LimitsView extends StatelessWidget {
   final Txt txt;
-  
-  LimitsView({super.key, required this.txt});
+  final LimitsNavigator navigator;
+  final AppNavigator appNavigator;
+
+  LimitsView({super.key, required this.txt, required this.navigator, required this.appNavigator});
 
   HeartRateStatus status = HeartRateStatus.tooHigh;
 
@@ -25,32 +28,19 @@ class LimitsView extends StatelessWidget {
             children: [
               // TODO	add connection status indicator text + color
               const SizedBox(height: 40),
-              TextFields.textField(
-                outerLabel: txt.get.saved_limits,
-                labelPosition: LabelPosition.top,
-              ),
+              TextFields.textField(outerLabel: txt.get.saved_limits, labelPosition: LabelPosition.top),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Buttons.rectangleButton(
-                    context: context,
-                    text: txt.get.button_save_limits,
-                    onPressed: _saveLimits,
-                  ),
+                  Buttons.rectangleButton(context: context, text: txt.get.button_save_limits, onPressed: _saveLimits),
                 ],
               ),
               //
               const SizedBox(height: 30),
-              TextFields.textField(
-                outerLabel: txt.get.upper_limit,
-                labelPosition: LabelPosition.top,
-              ),
+              TextFields.textField(outerLabel: txt.get.upper_limit, labelPosition: LabelPosition.top),
               //
               const SizedBox(height: 10),
-              TextFields.textField(
-                outerLabel: txt.get.lower_limit,
-                labelPosition: LabelPosition.top,
-              ),
+              TextFields.textField(outerLabel: txt.get.lower_limit, labelPosition: LabelPosition.top),
               //
               const SizedBox(height: 4),
               SizedBox(height: circlePadding),
@@ -67,19 +57,11 @@ class LimitsView extends StatelessWidget {
               Row(
                 children: [
                   Expanded(
-                    child: Buttons.rectangleButton(
-                      context: context,
-                      text: txt.get.button_start,
-                      onPressed: _start,
-                    ),
+                    child: Buttons.rectangleButton(context: context, text: txt.get.button_start, onPressed: _start),
                   ),
                   SizedBox(width: 10),
                   Expanded(
-                    child: Buttons.rectangleButton(
-                      context: context,
-                      text: txt.get.button_stop,
-                      onPressed: _stop,
-                    ),
+                    child: Buttons.rectangleButton(context: context, text: txt.get.button_stop, onPressed: _stop),
                   ),
                 ],
               ),

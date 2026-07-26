@@ -1,16 +1,10 @@
-import '../components/dialogs/e_dialog_msg.dart';
-import '../features/movie_details/model/movie.dart';
-import 'navigation_command.dart';
+import 'package:pulse_monitor/ui_components/dialogs/e_dialog_msg.dart';
 
-part '../features/movie_list/navigation/nav_commands.dart';
+import 'navigation_command.dart';
 
 final class NavProgress extends NavigationCommand {
   NavProgress() : super();
 }
-
-final class NavMovieList extends NavigationCommand {}
-
-final class NavTwoButtons extends NavigationCommand<Movie> {}
 
 final class NavMessageDialog extends NavigationCommand<EDialogMsg> {
   NavMessageDialog(super.dialogParams);
@@ -19,3 +13,7 @@ final class NavMessageDialog extends NavigationCommand<EDialogMsg> {
 final class NavErrorDialog extends NavigationCommand<Exception> {
   NavErrorDialog(super.e);
 }
+
+final class NavLimits extends NavigationCommand {}
+
+final class NavBleConnection extends NavigationCommand {}

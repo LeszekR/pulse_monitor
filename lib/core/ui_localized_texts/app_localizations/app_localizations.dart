@@ -98,6 +98,36 @@ abstract class AppLocalizations {
     Locale('pl'),
   ];
 
+  /// No description provided for @ok.
+  ///
+  /// In pl, this message translates to:
+  /// **'OK'**
+  String get ok;
+
+  /// No description provided for @yes.
+  ///
+  /// In pl, this message translates to:
+  /// **'Tak'**
+  String get yes;
+
+  /// No description provided for @no.
+  ///
+  /// In pl, this message translates to:
+  /// **'Nie'**
+  String get no;
+
+  /// No description provided for @cancel.
+  ///
+  /// In pl, this message translates to:
+  /// **'Anuluj'**
+  String get cancel;
+
+  /// No description provided for @dialog_title_error.
+  ///
+  /// In pl, this message translates to:
+  /// **'Błąd'**
+  String get dialog_title_error;
+
   /// No description provided for @saved_limits.
   ///
   /// In pl, this message translates to:
@@ -133,6 +163,24 @@ abstract class AppLocalizations {
   /// In pl, this message translates to:
   /// **'Stop'**
   String get button_stop;
+
+  /// No description provided for @ble_permission_missing.
+  ///
+  /// In pl, this message translates to:
+  /// **'Brak uprawnień do obsługi Bluetooth'**
+  String get ble_permission_missing;
+
+  /// No description provided for @error_ble_connection_failed.
+  ///
+  /// In pl, this message translates to:
+  /// **'Połączenie Bluetooth nie udało się'**
+  String get error_ble_connection_failed;
+
+  /// No description provided for @ble_disconnected.
+  ///
+  /// In pl, this message translates to:
+  /// **'Połączenie Bluetooth zostało przerwane'**
+  String get ble_disconnected;
 }
 
 class _AppLocalizationsDelegate

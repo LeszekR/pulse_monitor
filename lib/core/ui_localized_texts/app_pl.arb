@@ -1,8 +1,19 @@
 {
+  "ok": "OK",
+  "yes": "Tak",
+  "no": "Nie",
+  "cancel": "Anuluj",
+  "dialog_title_error": "Błąd",
+
   "saved_limits": "Zapisane limity",
   "upper_limit": "Górny limit",
   "lower_limit": "Dolny limit",
   "button_save_limits": "Zapisz limity",
   "button_start": "Start",
-  "button_stop": "Stop"
+  "button_stop": "Stop",
+
+
+  "ble_permission_missing": "Brak uprawnień do obsługi Bluetooth",
+  "error_ble_connection_failed": "Połączenie Bluetooth nie udało się",
+  "ble_disconnected": "Połączenie Bluetooth zostało przerwane"
 }

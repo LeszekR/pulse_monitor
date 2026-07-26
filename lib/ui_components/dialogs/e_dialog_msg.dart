@@ -1,5 +1,4 @@
 enum EDialogMsg {
-  searchQueryNotFound,
-  noMovieSelected,
-  noSuchMovie,
+  blePermissionMissing,
+  bleDisconnected,
 }
