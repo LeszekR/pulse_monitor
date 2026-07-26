@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pulse_monitor/common/ui_localized_texts/app_localizations/app_localizations.dart';
-import 'package:pulse_monitor/components/buttons.dart';
-import 'package:pulse_monitor/components/text_fields.dart';
-
-enum HeartRateStatus { none, tooLow, ok, tooHigh }
+import 'package:pulse_monitor/core/ui_localized_texts/app_localizations/app_localizations.dart';
+import 'package:pulse_monitor/features/limits/presentation/limits_state.dart';
+import 'package:pulse_monitor/ui_components/buttons.dart';
+import 'package:pulse_monitor/ui_components/text_fields.dart';
 
 class LimitsView extends StatefulWidget {
   const LimitsView({super.key});
@@ -13,7 +12,7 @@ class LimitsView extends StatefulWidget {
 }
 
 class LimitsViewState extends State<LimitsView> {
-  HeartRateStatus status = HeartRateStatus.none;
+  HeartRateStatus status = HeartRateStatus.tooHigh;
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +25,7 @@ class LimitsViewState extends State<LimitsView> {
           padding: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
           child: Column(
             children: [
+              // TODO	add connection status indicator text + color
               const SizedBox(height: 40),
               TextFields.textField(
                 outerLabel: AppLocalizations.of(context)!.saved_limits,
@@ -62,7 +62,7 @@ class LimitsViewState extends State<LimitsView> {
                 decoration: BoxDecoration(
                   color: _makeColor(status),
                   shape: BoxShape.circle,
-                  border: Border.all(color: Colors.black, width: 2),
+                  border: Border.all(color: Colors.black, width: 1),
                 ),
               ),
               SizedBox(height: circlePadding),
@@ -103,10 +103,10 @@ class LimitsViewState extends State<LimitsView> {
 
   double _makeDotSize(HeartRateStatus level) {
     return switch (level) {
-      HeartRateStatus.none => 70,
-      HeartRateStatus.tooLow => 60,
+      HeartRateStatus.none => 40,
+      HeartRateStatus.tooLow => 40,
       HeartRateStatus.ok => 70,
-      HeartRateStatus.tooHigh => 80,
+      HeartRateStatus.tooHigh => 100,
     };
   }
 
