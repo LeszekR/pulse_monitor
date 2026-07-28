@@ -1,4 +1,6 @@
 abstract interface class HeartRateService {
-  Stream<int> heartRateStream();
+  void stopHeartRateStream();
+
   //receiving impulses from the BLE he
+  Future<Stream<int>?> getHeartRateStream();
 }

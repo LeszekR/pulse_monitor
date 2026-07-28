@@ -8,7 +8,10 @@ class BleConnectionServiceImpl implements BleConnectionService {
   }
 
   @override
-  void stopDiscoveringDevices(){}
+  void stopDiscoveringDevices(){
+    // TODO: implement stopDiscoveringDevices
+    throw UnimplementedError();
+  }
 
   @override
   bool connect(){

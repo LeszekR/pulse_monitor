@@ -17,6 +17,10 @@ class DialogFactory {
         params = DialogParamsOk(txt.get.ble_permission_missing);
       case EDialogMsg.bleDisconnected:
         params = DialogParamsOk(txt.get.ble_disconnected);
+      case EDialogMsg.failedToStopMonitoring:
+        params = DialogParamsOk(txt.get.failed_to_stop_monitoring);
+      case EDialogMsg.limitsNotSet:
+        params = DialogParamsOk(txt.get.limits_not_set);
     }
     return MessageDialog(txt, params);
   }

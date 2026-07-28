@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pulse_monitor/core/navigation/app_navigator.dart';
 import 'package:pulse_monitor/core/ui_localized_texts/app_localizations/txt.dart';
 import 'package:pulse_monitor/features/limits/navigation/limits_navigator.dart';
+import 'package:pulse_monitor/features/limits/presentation/limits_bloc.dart';
+import 'package:pulse_monitor/features/limits/presentation/limits_event.dart';
 import 'package:pulse_monitor/features/limits/presentation/limits_state.dart';
 import 'package:pulse_monitor/ui_components/buttons.dart';
 import 'package:pulse_monitor/ui_components/text_fields.dart';
@@ -10,65 +13,101 @@ class LimitsView extends StatelessWidget {
   final Txt txt;
   final LimitsNavigator navigator;
   final AppNavigator appNavigator;
+  final TextEditingController _lowerLimitController = TextEditingController();
+  final TextEditingController _upperLimitController = TextEditingController();
 
   LimitsView({super.key, required this.txt, required this.navigator, required this.appNavigator});
 
-  HeartRateStatus status = HeartRateStatus.tooHigh;
-
   @override
   Widget build(BuildContext context) {
-    double dotSize = _makeDotSize(status);
-    double circlePadding = 120 - dotSize;
+    final bloc = context.read<LimitsBloc>();
 
-    return SingleChildScrollView(
-      child: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
-          child: Column(
-            children: [
-              // TODO	add connection status indicator text + color
-              const SizedBox(height: 40),
-              TextFields.textField(outerLabel: txt.get.saved_limits, labelPosition: LabelPosition.top),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return BlocConsumer<LimitsBloc, LimitsState>(
+      listenWhen: (previous, current) => previous.navCommand != current.navCommand,
+      listener: (context, state) => navigator.go(context, state.navCommand),
+
+      buildWhen: (previous, current) => previous.heartRateStatus != current.heartRateStatus,
+      builder: (context, state) {
+
+        double dotSize = _makeDotSize(state.heartRateStatus);
+        double circlePadding = 90 - dotSize / 2;
+        
+        _lowerLimitController.text = state.lowerLimit == null ? '' : state.lowerLimit!.toString();
+        _upperLimitController.text = state.upperLimit == null ? '' : state.upperLimit!.toString();
+
+        return SingleChildScrollView(
+          child: SafeArea(
+            child: Padding(
+              padding: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
+              child: Column(
                 children: [
-                  Buttons.rectangleButton(context: context, text: txt.get.button_save_limits, onPressed: _saveLimits),
+                  // TODO	add connection status indicator text + color
+                  const SizedBox(height: 40),
+                  TextFields.textField(outerLabel: txt.get.saved_limits, labelPosition: LabelPosition.top),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Buttons.rectangleButton(
+                        context: context,
+                        text: txt.get.button_save_limits,
+                        onPressed: () => _saveLimits(bloc),
+                      ),
+                    ],
+                  ),
+                  //
+                  const SizedBox(height: 30),
+                  TextFields.textField(
+                    outerLabel: txt.get.upper_limit,
+                    labelPosition: LabelPosition.top,
+                    controller: _lowerLimitController,
+                    onChanged: (String value) => _setLowerLimit(bloc, value),
+                  ),
+                  //
+                  const SizedBox(height: 10),
+                  TextFields.textField(
+                    outerLabel: txt.get.lower_limit,
+                    labelPosition: LabelPosition.top,
+                    controller: _upperLimitController,
+                    onChanged: (String value) => _setUpperLimit(bloc, value),
+                  ),
+                  //
+                  const SizedBox(height: 4),
+                  SizedBox(height: circlePadding),
+                  Container(
+                    width: dotSize,
+                    height: dotSize,
+                    decoration: BoxDecoration(
+                      color: _makeColor(state.heartRateStatus),
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.black, width: 1),
+                    ),
+                  ),
+                  SizedBox(height: circlePadding),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Buttons.rectangleButton(
+                          context: context,
+                          text: txt.get.button_start,
+                          onPressed: () => _start(bloc),
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: Buttons.rectangleButton(
+                          context: context,
+                          text: txt.get.button_stop,
+                          onPressed: () => _stop(bloc),
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
-              //
-              const SizedBox(height: 30),
-              TextFields.textField(outerLabel: txt.get.upper_limit, labelPosition: LabelPosition.top),
-              //
-              const SizedBox(height: 10),
-              TextFields.textField(outerLabel: txt.get.lower_limit, labelPosition: LabelPosition.top),
-              //
-              const SizedBox(height: 4),
-              SizedBox(height: circlePadding),
-              Container(
-                width: dotSize,
-                height: dotSize,
-                decoration: BoxDecoration(
-                  color: _makeColor(status),
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.black, width: 1),
-                ),
-              ),
-              SizedBox(height: circlePadding),
-              Row(
-                children: [
-                  Expanded(
-                    child: Buttons.rectangleButton(context: context, text: txt.get.button_start, onPressed: _start),
-                  ),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: Buttons.rectangleButton(context: context, text: txt.get.button_stop, onPressed: _stop),
-                  ),
-                ],
-              ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -83,16 +122,30 @@ class LimitsView extends StatelessWidget {
 
   double _makeDotSize(HeartRateStatus level) {
     return switch (level) {
-      HeartRateStatus.none => 40,
-      HeartRateStatus.tooLow => 40,
-      HeartRateStatus.ok => 70,
-      HeartRateStatus.tooHigh => 100,
+      HeartRateStatus.none => 70,
+      HeartRateStatus.tooLow => 70,
+      HeartRateStatus.ok => 90,
+      HeartRateStatus.tooHigh => 110,
     };
   }
 
-  void _saveLimits() {}
+  void _saveLimits(LimitsBloc bloc) {
+    bloc.add(SaveLimitsEvent());
+  }
 
-  void _start() {}
+  void _start(LimitsBloc bloc) {
+    bloc.add(StartMonitoringEvent());
+  }
 
-  void _stop() {}
+  void _stop(LimitsBloc bloc) {
+    bloc.add(StopMonitoringEvent());
+  }
+
+  void _setLowerLimit(LimitsBloc bloc, String limit) {
+    bloc.add(SetLowerLimitEvent(limit));
+  }
+
+  void _setUpperLimit(LimitsBloc bloc, String limit) {
+    bloc.add(SetUpperLimitEvent(limit));
+  }
 }

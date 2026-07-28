@@ -5,7 +5,9 @@ import 'navigation_command.dart';
 
 abstract class FeatureNavigator {
   AppNavigator? _appNavigator;
+
   set appNavigator(AppNavigator appNavigator) => _appNavigator = appNavigator;
+
   AppNavigator get appNavigator => _appNavigator!;
 
   void navigate(BuildContext context, NavigationCommand navCommand);

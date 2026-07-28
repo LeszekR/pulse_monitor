@@ -14,5 +14,8 @@
 
   "ble_permission_missing": "Missing permission to connect with Bluetooth",
   "error_ble_connection_failed": "Bluetooth connection failed",
-  "ble_disconnected": "Bluetooth connection was disconnected"
+  "ble_disconnected": "Bluetooth connection was disconnected",
+
+  "failed_to_stop_monitoring": "Failed to stop monitoring heart rate",
+  "limits_not_set": "Set heart rate limits"
 }

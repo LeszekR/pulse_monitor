@@ -9,6 +9,8 @@ class TextFields {
     BorderType borderType = BorderType.outline,
     String? outerLabel,
     LabelPosition? labelPosition,
+    TextEditingController? controller,
+    ValueChanged<String>? onChanged,
   }) {
     assert(
       (outerLabel == null) == (labelPosition == null),
@@ -16,6 +18,8 @@ class TextFields {
     );
 
     TextField textField = TextField(
+      controller: controller,
+      onChanged: onChanged,
       decoration: InputDecoration(
         border: borderType == BorderType.outline ? OutlineInputBorder() : UnderlineInputBorder(),
       ),

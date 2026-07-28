@@ -12,8 +12,10 @@
   "button_start": "Start",
   "button_stop": "Stop",
 
-
   "ble_permission_missing": "Brak uprawnień do obsługi Bluetooth",
   "error_ble_connection_failed": "Połączenie Bluetooth nie udało się",
-  "ble_disconnected": "Połączenie Bluetooth zostało przerwane"
+  "ble_disconnected": "Połączenie Bluetooth zostało przerwane",
+
+  "failed_to_stop_monitoring": "Nie udało się przerwać monitorowania pulsu",
+  "limits_not_set": "Ustaw limity tętna"
 }

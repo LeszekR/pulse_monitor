@@ -181,6 +181,18 @@ abstract class AppLocalizations {
   /// In pl, this message translates to:
   /// **'Połączenie Bluetooth zostało przerwane'**
   String get ble_disconnected;
+
+  /// No description provided for @failed_to_stop_monitoring.
+  ///
+  /// In pl, this message translates to:
+  /// **'Nie udało się przerwać monitorowania pulsu'**
+  String get failed_to_stop_monitoring;
+
+  /// No description provided for @limits_not_set.
+  ///
+  /// In pl, this message translates to:
+  /// **'Ustaw limity tętna'**
+  String get limits_not_set;
 }
 
 class _AppLocalizationsDelegate
