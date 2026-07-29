@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pulse_monitor/core/navigation/app_nav_commands.dart';
+import 'package:pulse_monitor/features/limits/device/battery_service_impl.dart';
+import 'package:pulse_monitor/features/limits/domain/battery_service.dart';
 import 'package:pulse_monitor/features/limits/domain/heart_rate_service.dart';
 import 'package:pulse_monitor/features/limits/domain/limits_repository.dart';
 import 'package:pulse_monitor/features/limits/presentation/limits_event.dart';
@@ -9,17 +11,33 @@ import 'package:pulse_monitor/features/limits/presentation/limits_state.dart';
 import 'package:pulse_monitor/ui_components/dialogs/e_dialog_msg.dart';
 
 class LimitsBloc extends Bloc<LimitsEvent, LimitsState> {
+  final BatteryService batteryService;
   final HeartRateService heartRateService;
   final LimitsRepository limitsRepository;
   StreamSubscription<int>? _subscription;
 
-  LimitsBloc(this.heartRateService, this.limitsRepository) : super(LimitsState()) {
+  LimitsBloc(this.batteryService, this.heartRateService, this.limitsRepository) : super(LimitsState()) {
+    on<CheckBatteryLevelEvent>(_checkBatteryLevel);
     on<StartMonitoringEvent>(_startMonitoring);
     on<StopMonitoringEvent>(_stopMonitoring);
     on<ShowBleConnectionEvent>(_showBleConnection);
     on<SetLowerLimitEvent>(_setLowerLimit);
     on<SetUpperLimitEvent>(_setUpperLimit);
     on<HeartRateReceivedEvent>(_showHeartRateStatus);
+  }
+
+  Future<void> _checkBatteryLevel(CheckBatteryLevelEvent event, Emitter<LimitsState> emit) async {
+    String batteryLevel = await batteryService.getBatteryLevel();
+    if (batteryLevel.contains(BatteryServiceImpl.batteryLevelUnknown)) {
+      emit(
+        state.copyWith(
+          batteryLevel: BatteryServiceImpl.batteryLevelUnknown,
+          navCommand: NavErrorDialog(Exception(batteryLevel)),
+        ),
+      );
+    } else {
+      emit(state.copyWith(batteryLevel: batteryLevel));
+    }
   }
 
   Future<void> _saveLimits(SaveLimitsEvent event, Emitter<LimitsState> emit) async {

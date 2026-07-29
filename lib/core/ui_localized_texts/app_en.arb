@@ -4,6 +4,7 @@
   "no": "No",
   "cancel": "Cancel",
   "dialog_title_error": "Error",
+  "error": "Error",
 
   "saved_limits": "Saved limits",
   "upper_limit": "Upper limit",
@@ -17,5 +18,8 @@
   "ble_disconnected": "Bluetooth connection was disconnected",
 
   "failed_to_stop_monitoring": "Failed to stop monitoring heart rate",
-  "limits_not_set": "Set heart rate limits"
+  "limits_not_set": "Set heart rate limits",
+
+  "battery_level_unknown": "Battery level unknown",
+  "battery": "Battery"
 }

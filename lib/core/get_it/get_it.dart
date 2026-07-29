@@ -3,8 +3,10 @@ import 'package:pulse_monitor/core/navigation/app_navigator.dart';
 import 'package:pulse_monitor/core/ui_localized_texts/app_localizations/txt.dart';
 import 'package:pulse_monitor/features/ble_connection/navigation/ble_connection_navigator.dart';
 import 'package:pulse_monitor/features/ble_connection/presentation/ble_connection_bloc.dart';
+import 'package:pulse_monitor/features/limits/device/battery_service_impl.dart';
 import 'package:pulse_monitor/features/limits/device/heart_rate_service_impl.dart';
 import 'package:pulse_monitor/features/limits/device/limits_repository_impl.dart';
+import 'package:pulse_monitor/features/limits/domain/battery_service.dart';
 import 'package:pulse_monitor/features/limits/domain/heart_rate_service.dart';
 import 'package:pulse_monitor/features/limits/domain/limits_repository.dart';
 import 'package:pulse_monitor/features/limits/navigation/limits_navigator.dart';
@@ -23,9 +25,12 @@ void initGetIt() {
     () => AppNavigator(getIt<Txt>(), getIt<DialogFactory>(), getIt<BleConnectionNavigator>(), getIt<LimitsNavigator>()),
   );
 
+  getIt.registerLazySingleton<BatteryService>(() => BatteryServiceImpl());
   getIt.registerSingleton<HeartRateService>(HeartRateServiceImpl());
   getIt.registerSingleton<LimitsRepository>(LimitsRepositoryImpl());
-  getIt.registerLazySingleton<LimitsBloc>(() => LimitsBloc(getIt<HeartRateService>(), getIt<LimitsRepository>()));
+  getIt.registerLazySingleton<LimitsBloc>(
+    () => LimitsBloc(getIt<BatteryService>(), getIt<HeartRateService>(), getIt<LimitsRepository>()),
+  );
 
   getIt.registerLazySingleton<BleConnectionBloc>(() => BleConnectionBloc());
 

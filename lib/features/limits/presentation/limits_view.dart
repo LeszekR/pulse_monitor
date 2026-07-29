@@ -10,6 +10,8 @@ import 'package:pulse_monitor/ui_components/buttons.dart';
 import 'package:pulse_monitor/ui_components/text_fields.dart';
 
 class LimitsView extends StatelessWidget {
+  static const batteryLevelUnknown = 'battery level unknown';
+
   final Txt txt;
   final LimitsNavigator navigator;
   final AppNavigator appNavigator;
@@ -26,14 +28,14 @@ class LimitsView extends StatelessWidget {
       listenWhen: (previous, current) => previous.navCommand != current.navCommand,
       listener: (context, state) => navigator.go(context, state.navCommand),
 
-      buildWhen: (previous, current) => previous.heartRateStatus != current.heartRateStatus,
+      buildWhen: (previous, current) =>
+          previous.heartRateStatus != current.heartRateStatus || previous.batteryLevel != current.batteryLevel,
       builder: (context, state) {
+        _lowerLimitController.text = state.lowerLimit == null ? '' : state.lowerLimit!.toString();
+        _upperLimitController.text = state.upperLimit == null ? '' : state.upperLimit!.toString();
 
         double dotSize = _makeDotSize(state.heartRateStatus);
         double circlePadding = 90 - dotSize / 2;
-        
-        _lowerLimitController.text = state.lowerLimit == null ? '' : state.lowerLimit!.toString();
-        _upperLimitController.text = state.upperLimit == null ? '' : state.upperLimit!.toString();
 
         return SingleChildScrollView(
           child: SafeArea(
@@ -43,6 +45,22 @@ class LimitsView extends StatelessWidget {
                 children: [
                   // TODO	add connection status indicator text + color
                   const SizedBox(height: 40),
+                  Row(
+                    children: [
+                      Expanded(child: SizedBox()),
+                      InkWell(
+                        onTap: () => _checkBatteryLevel(bloc),
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(color: _getBatteryColor(state.batteryLevel)),
+                          child: Padding(
+                            padding: EdgeInsets.all(4),
+                            child: Text(_getBatteryLevelString(state.batteryLevel)),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
                   TextFields.textField(outerLabel: txt.get.saved_limits, labelPosition: LabelPosition.top),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -127,6 +145,37 @@ class LimitsView extends StatelessWidget {
       HeartRateStatus.ok => 90,
       HeartRateStatus.tooHigh => 110,
     };
+  }
+
+  void _checkBatteryLevel(LimitsBloc bloc) {
+    bloc.add(CheckBatteryLevelEvent());
+  }
+
+  String _getBatteryLevelString(String? batteryLevel) {
+    if (batteryLevel == null) {
+      return txt.get.battery_level_unknown;
+    }
+    try {
+      var level = int.parse(batteryLevel);
+      return '${txt.get.battery}: $level%';
+    } catch (e) {
+      return '${txt.get.error}: ${txt.get.battery_level_unknown}';
+    }
+  }
+
+  Color _getBatteryColor(String? batteryLevel) {
+    if (batteryLevel == null) {
+      return Colors.white;
+    } else if (batteryLevel == batteryLevelUnknown) {
+      return Colors.white;
+    } else {
+      int level = int.parse(batteryLevel);
+      return switch (level) {
+        >= 60 => Colors.white,
+        <= 30 => Colors.pink,
+        _ => Colors.yellow,
+      };
+    }
   }
 
   void _saveLimits(LimitsBloc bloc) {

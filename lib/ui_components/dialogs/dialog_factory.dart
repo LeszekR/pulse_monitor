@@ -36,7 +36,8 @@ class DialogFactory {
     } else if (e is MovieDetailsOtherException) {
       text = '${txt.get.error_get_movie}\n\n${e.toString()}';
     }*/ else {
-      throw UnimplementedError('Not implemented error dialog case for: ${e.runtimeType}');
+      text = 'Error: ${e.toString()}';
+      // throw UnimplementedError('Not implemented error dialog case for: ${e.runtimeType}');
     }
     return MessageDialog(txt, DialogParamsOk(text, txt.get.dialog_title_error));
   }

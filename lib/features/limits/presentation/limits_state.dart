@@ -4,6 +4,7 @@ import 'package:pulse_monitor/core/navigation/navigation_command.dart';
 enum HeartRateStatus { none, tooLow, ok, tooHigh }
 
 class LimitsState extends Equatable {
+  final String? batteryLevel;
   final List<String>? savedLimits;
   final int? lowerLimit;
   final int? upperLimit;
@@ -11,6 +12,7 @@ class LimitsState extends Equatable {
   final NavigationCommand? navCommand;
 
   const LimitsState({
+    this.batteryLevel,
     this.savedLimits,
     this.lowerLimit,
     this.upperLimit,
@@ -19,6 +21,7 @@ class LimitsState extends Equatable {
   });
 
   LimitsState copyWith({
+    String? batteryLevel,
     List<String>? savedLimits,
     int? lowerLimit,
     int? upperLimit,
@@ -26,6 +29,7 @@ class LimitsState extends Equatable {
     NavigationCommand? navCommand,
   }) {
     return LimitsState(
+      batteryLevel: batteryLevel ?? this.batteryLevel,
       savedLimits: savedLimits ?? this.savedLimits,
       lowerLimit: lowerLimit ?? this.lowerLimit,
       upperLimit: upperLimit ?? this.upperLimit,
@@ -36,6 +40,7 @@ class LimitsState extends Equatable {
 
   @override
   List<Object?> get props => [
+    batteryLevel,
     savedLimits,
     lowerLimit,
     upperLimit,

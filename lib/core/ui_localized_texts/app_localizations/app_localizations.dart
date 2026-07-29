@@ -128,6 +128,12 @@ abstract class AppLocalizations {
   /// **'Błąd'**
   String get dialog_title_error;
 
+  /// No description provided for @error.
+  ///
+  /// In pl, this message translates to:
+  /// **'Błąd'**
+  String get error;
+
   /// No description provided for @saved_limits.
   ///
   /// In pl, this message translates to:
@@ -193,6 +199,18 @@ abstract class AppLocalizations {
   /// In pl, this message translates to:
   /// **'Ustaw limity tętna'**
   String get limits_not_set;
+
+  /// No description provided for @battery_level_unknown.
+  ///
+  /// In pl, this message translates to:
+  /// **'Stan baterii nieznany'**
+  String get battery_level_unknown;
+
+  /// No description provided for @battery.
+  ///
+  /// In pl, this message translates to:
+  /// **'Bateria'**
+  String get battery;
 }
 
 class _AppLocalizationsDelegate

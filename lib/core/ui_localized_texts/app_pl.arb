@@ -4,6 +4,7 @@
   "no": "Nie",
   "cancel": "Anuluj",
   "dialog_title_error": "Błąd",
+  "error": "Błąd",
 
   "saved_limits": "Zapisane limity",
   "upper_limit": "Górny limit",
@@ -17,5 +18,8 @@
   "ble_disconnected": "Połączenie Bluetooth zostało przerwane",
 
   "failed_to_stop_monitoring": "Nie udało się przerwać monitorowania pulsu",
-  "limits_not_set": "Ustaw limity tętna"
+  "limits_not_set": "Ustaw limity tętna",
+
+  "battery_level_unknown": "Stan baterii nieznany",
+  "battery": "Bateria"
 }
