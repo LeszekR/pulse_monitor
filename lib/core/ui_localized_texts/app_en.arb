@@ -21,5 +21,7 @@
   "limits_not_set": "Set heart rate limits",
 
   "battery_level_unknown": "Battery level unknown",
-  "battery": "Battery"
+  "battery": "Battery",
+
+  "connect_heart_rate_monitor": "Connect heart rate sensor"
 }

@@ -211,6 +211,12 @@ abstract class AppLocalizations {
   /// In pl, this message translates to:
   /// **'Bateria'**
   String get battery;
+
+  /// No description provided for @connect_heart_rate_monitor.
+  ///
+  /// In pl, this message translates to:
+  /// **'Połącz czujnik tętna'**
+  String get connect_heart_rate_monitor;
 }
 
 class _AppLocalizationsDelegate

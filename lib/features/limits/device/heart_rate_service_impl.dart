@@ -1,9 +1,24 @@
 import 'dart:math';
 
+import 'package:flutter/services.dart';
 import 'package:pulse_monitor/features/limits/domain/heart_rate_service.dart';
 
 class HeartRateServiceImpl implements HeartRateService {
+  static MethodChannel bleConnectionChannel = MethodChannel('ble_connection_channel');
+  static const platformException = 'Platform exception';
+  static const otherException = 'Other exception';
   Stream<int>? _heartRateStream;
+
+  @override
+  Future<String> connectHeartRateSensor() async {
+    try {
+      return await bleConnectionChannel.invokeMethod('discoverDevices');
+    } on PlatformException catch (e){
+      return '$platformException: ${e.toString()}';
+    } catch (e) {
+      return '$otherException: ${e.toString()}';
+    }
+  }
 
   @override
   void stopHeartRateStream() async {

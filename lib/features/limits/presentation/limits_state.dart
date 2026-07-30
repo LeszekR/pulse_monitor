@@ -5,6 +5,7 @@ enum HeartRateStatus { none, tooLow, ok, tooHigh }
 
 class LimitsState extends Equatable {
   final String? batteryLevel;
+  final String? connectedBleSensor;
   final List<String>? savedLimits;
   final int? lowerLimit;
   final int? upperLimit;
@@ -13,6 +14,7 @@ class LimitsState extends Equatable {
 
   const LimitsState({
     this.batteryLevel,
+    this.connectedBleSensor,
     this.savedLimits,
     this.lowerLimit,
     this.upperLimit,
@@ -22,6 +24,7 @@ class LimitsState extends Equatable {
 
   LimitsState copyWith({
     String? batteryLevel,
+    String? connectedBleSensor,
     List<String>? savedLimits,
     int? lowerLimit,
     int? upperLimit,
@@ -30,6 +33,7 @@ class LimitsState extends Equatable {
   }) {
     return LimitsState(
       batteryLevel: batteryLevel ?? this.batteryLevel,
+      connectedBleSensor: connectedBleSensor ?? this.connectedBleSensor,
       savedLimits: savedLimits ?? this.savedLimits,
       lowerLimit: lowerLimit ?? this.lowerLimit,
       upperLimit: upperLimit ?? this.upperLimit,
@@ -41,6 +45,7 @@ class LimitsState extends Equatable {
   @override
   List<Object?> get props => [
     batteryLevel,
+    connectedBleSensor,
     savedLimits,
     lowerLimit,
     upperLimit,

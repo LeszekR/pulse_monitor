@@ -2,7 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:pulse_monitor/features/limits/domain/battery_service.dart';
 
 class BatteryServiceImpl implements BatteryService {
-  static MethodChannel platformBattery = MethodChannel('samples.flutter.dev/battery');
+  static MethodChannel platformBattery = MethodChannel('batteryChanel');
   static String batteryLevelUnknown = 'Battery level unknown.\n\n';
 
   @override

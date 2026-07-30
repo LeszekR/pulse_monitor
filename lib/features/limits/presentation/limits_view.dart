@@ -28,8 +28,8 @@ class LimitsView extends StatelessWidget {
       listenWhen: (previous, current) => previous.navCommand != current.navCommand,
       listener: (context, state) => navigator.go(context, state.navCommand),
 
-      buildWhen: (previous, current) =>
-          previous.heartRateStatus != current.heartRateStatus || previous.batteryLevel != current.batteryLevel,
+      // buildWhen: (previous, current) =>
+      //     previous.heartRateStatus != current.heartRateStatus || previous.batteryLevel != current.batteryLevel,
       builder: (context, state) {
         _lowerLimitController.text = state.lowerLimit == null ? '' : state.lowerLimit!.toString();
         _upperLimitController.text = state.upperLimit == null ? '' : state.upperLimit!.toString();
@@ -48,18 +48,49 @@ class LimitsView extends StatelessWidget {
                   Row(
                     children: [
                       Expanded(child: SizedBox()),
-                      InkWell(
-                        onTap: () => _checkBatteryLevel(bloc),
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(color: _getBatteryColor(state.batteryLevel)),
-                          child: Padding(
-                            padding: EdgeInsets.all(4),
-                            child: Text(_getBatteryLevelString(state.batteryLevel)),
+                      SizedBox(
+                        width: 200,
+                        height: 27,
+                        child: InkWell(
+                          onTap: () => _checkBatteryLevel(bloc),
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(color: _getBatteryColor(state.batteryLevel)),
+                            child: Padding(
+                              padding: EdgeInsets.all(4),
+                              child: Align(
+                                alignment: AlignmentGeometry.center,
+                                child: Text(_getBatteryLevelString(state.batteryLevel)),
+                              ),
+                            ),
                           ),
                         ),
                       ),
                     ],
                   ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Expanded(child: SizedBox()),
+                      InkWell(
+                        onTap: () => _connectHeartRateSensor(bloc),
+                        child: SizedBox(
+                          width: 200,
+                          height: 27,
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(color: _getSensorColor(state.connectedBleSensor)),
+                            child: Padding(
+                              padding: EdgeInsets.all(4),
+                              child: Align(
+                                alignment: AlignmentGeometry.center,
+                                child: Text(state.connectedBleSensor ?? txt.get.connect_heart_rate_monitor),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  // ),
                   const SizedBox(height: 20),
                   TextFields.textField(outerLabel: txt.get.saved_limits, labelPosition: LabelPosition.top),
                   Row(
@@ -175,6 +206,20 @@ class LimitsView extends StatelessWidget {
         <= 30 => Colors.pink,
         _ => Colors.yellow,
       };
+    }
+  }
+
+  void _connectHeartRateSensor(LimitsBloc bloc) {
+    bloc.add(ConnectSensorEvent());
+  }
+
+  Color _getSensorColor(String? sensorDeviceName) {
+    if (sensorDeviceName == null) {
+      return Color.fromRGBO(248, 241, 156, 0.7647058823529411);
+    }      else if (sensorDeviceName.contains('xception')) {
+      return Color.fromRGBO(236, 71, 71, 0.30980392156862746);
+    } else {
+      return Colors.white;
     }
   }
 

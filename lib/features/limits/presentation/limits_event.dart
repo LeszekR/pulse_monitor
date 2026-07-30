@@ -4,6 +4,8 @@ sealed class LimitsEvent {
 
 class CheckBatteryLevelEvent extends LimitsEvent {}
 
+class ConnectSensorEvent extends LimitsEvent {}
+
 class SaveLimitsEvent extends LimitsEvent {}
 
 class StartMonitoringEvent extends LimitsEvent {}
