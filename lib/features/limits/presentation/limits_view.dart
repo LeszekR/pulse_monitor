@@ -10,7 +10,7 @@ import 'package:pulse_monitor/ui_components/buttons.dart';
 import 'package:pulse_monitor/ui_components/text_fields.dart';
 
 class LimitsView extends StatelessWidget {
-  static const batteryLevelUnknown = 'battery level unknown';
+  static const batteryLevelUnknown = 'Battery level unknown';
 
   final Txt txt;
   final LimitsNavigator navigator;
@@ -190,19 +190,19 @@ class LimitsView extends StatelessWidget {
       var level = int.parse(batteryLevel);
       return '${txt.get.battery}: $level%';
     } catch (e) {
-      return '${txt.get.error}: ${txt.get.battery_level_unknown}';
+      return txt.get.battery_level_unknown;
     }
   }
 
   Color _getBatteryColor(String? batteryLevel) {
     if (batteryLevel == null) {
       return Colors.white;
-    } else if (batteryLevel == batteryLevelUnknown) {
+    } else if (batteryLevel.contains(batteryLevelUnknown)) {
       return Colors.white;
     } else {
       int level = int.parse(batteryLevel);
       return switch (level) {
-        >= 60 => Colors.white,
+        >= 60 => Color.fromRGBO(20, 100, 20, 0.3),
         <= 30 => Colors.pink,
         _ => Colors.yellow,
       };
@@ -216,7 +216,7 @@ class LimitsView extends StatelessWidget {
   Color _getSensorColor(String? sensorDeviceName) {
     if (sensorDeviceName == null) {
       return Color.fromRGBO(248, 241, 156, 0.7647058823529411);
-    }      else if (sensorDeviceName.contains('xception')) {
+    } else if (sensorDeviceName.contains('xception')) {
       return Color.fromRGBO(236, 71, 71, 0.30980392156862746);
     } else {
       return Colors.white;

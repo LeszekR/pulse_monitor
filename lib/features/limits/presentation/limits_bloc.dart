@@ -9,6 +9,7 @@ import 'package:pulse_monitor/features/limits/domain/heart_rate_service.dart';
 import 'package:pulse_monitor/features/limits/domain/limits_repository.dart';
 import 'package:pulse_monitor/features/limits/presentation/limits_event.dart';
 import 'package:pulse_monitor/features/limits/presentation/limits_state.dart';
+import 'package:pulse_monitor/features/limits/presentation/limits_view.dart';
 import 'package:pulse_monitor/ui_components/dialogs/e_dialog_msg.dart';
 
 class LimitsBloc extends Bloc<LimitsEvent, LimitsState> {
@@ -30,10 +31,10 @@ class LimitsBloc extends Bloc<LimitsEvent, LimitsState> {
 
   Future<void> _checkBatteryLevel(CheckBatteryLevelEvent event, Emitter<LimitsState> emit) async {
     String batteryLevel = await batteryService.getBatteryLevel();
-    if (batteryLevel.contains(BatteryServiceImpl.batteryLevelUnknown)) {
+    if (batteryLevel.contains(LimitsView.batteryLevelUnknown)) {
       emit(
         state.copyWith(
-          batteryLevel: BatteryServiceImpl.batteryLevelUnknown,
+          batteryLevel: LimitsView.batteryLevelUnknown,
           navCommand: NavErrorDialog(Exception(batteryLevel)),
         ),
       );
@@ -43,7 +44,7 @@ class LimitsBloc extends Bloc<LimitsEvent, LimitsState> {
   }
 
   Future<void> _connectHeartRateSensor(ConnectSensorEvent event, Emitter<LimitsState> emit) async {
-    final String deviceName = await heartRateService.connectHeartRateSensor();
+    final String deviceName = await heartRateService.startDiscoveringHeartRateSensors();
     String deviceNameToShow = '';
     if (deviceName.contains(HeartRateServiceImpl.platformException)) {
       deviceNameToShow = 'Platform exception';
@@ -64,7 +65,7 @@ class LimitsBloc extends Bloc<LimitsEvent, LimitsState> {
     }
 
     // timer to quit if no stream provided
-    Stream<int>? heartRateStream = await heartRateService.getHeartRateStream().timeout(Duration(seconds: 3));
+    Stream<int>? heartRateStream = await heartRateService.startHeartRateStream().timeout(Duration(seconds: 3));
 
     // timer to quit if the stream is empty
     Timer timer = Timer(Duration(seconds: 3), () {

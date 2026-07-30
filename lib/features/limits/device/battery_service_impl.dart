@@ -1,9 +1,9 @@
 import 'package:flutter/services.dart';
 import 'package:pulse_monitor/features/limits/domain/battery_service.dart';
+import 'package:pulse_monitor/features/limits/presentation/limits_view.dart';
 
 class BatteryServiceImpl implements BatteryService {
-  static MethodChannel platformBattery = MethodChannel('batteryChanel');
-  static String batteryLevelUnknown = 'Battery level unknown.\n\n';
+  static MethodChannel platformBattery = MethodChannel('battery_channel');
 
   @override
   Future<String> getBatteryLevel() async {
@@ -11,9 +11,9 @@ class BatteryServiceImpl implements BatteryService {
       final batteryLevel = await platformBattery.invokeMethod('getBatteryLevel');
       return batteryLevel.toString();
     } on PlatformException catch (e) {
-      return "$batteryLevelUnknown: '${e.message}'.";
+      return '${LimitsView.batteryLevelUnknown}\n\n${e.message}.';
     } catch (e) {
-      return "$batteryLevelUnknown Android error: '${e.toString()}'.";
+      return "${LimitsView.batteryLevelUnknown}\nAndroid error: '${e.toString()}'.";
     }
   }
 }

@@ -1,7 +1,9 @@
 abstract interface class HeartRateService {
-  Future<String> connectHeartRateSensor();
+  Future<String> startDiscoveringHeartRateSensors();
 
-  Future<Stream<int>?> getHeartRateStream();
+  Future<String> stopDiscoveringHeartRateSensors();
+
+  Future<Stream<int>?> startHeartRateStream();
 
   void stopHeartRateStream();
 }
