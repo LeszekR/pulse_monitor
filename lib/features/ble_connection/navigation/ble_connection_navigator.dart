@@ -7,11 +7,7 @@ import 'package:pulse_monitor/core/ui_localized_texts/app_localizations/txt.dart
 class BleConnectionNavigator extends FeatureNavigator {
   final Txt txt;
 
-  // final MovieDetailsController _movieDetailsController;
-
   BleConnectionNavigator(this.txt);
-
-  // MovieListNavigator(this.txt, this._movieDetailsController);
 
   @override
   void navigate(BuildContext context, NavigationCommand navCommand) {
@@ -23,9 +19,9 @@ class BleConnectionNavigator extends FeatureNavigator {
         appNavigator.dialogMessage(context, navCommand.payload!);
       } else if (navCommand is NavErrorDialog) {
         appNavigator.dialogError(context, navCommand.payload!);
-      } /*else if (navCommand is NavTwoButtons) {
+      } else if (navCommand is NavLimits) {
         appNavigator.limits(context);
-      } else if (navCommand is NavSearchCriteria) {
+      } /*else if (navCommand is NavSearchCriteria) {
         appNavigator.searchCriteria(context);
       } else if (navCommand is NavMovieDetails) {
         _showMovieDetails(context, navCommand.payload!);

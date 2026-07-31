@@ -188,6 +188,18 @@ abstract class AppLocalizations {
   /// **'Połączenie Bluetooth zostało przerwane'**
   String get ble_disconnected;
 
+  /// No description provided for @button_discover_sensors.
+  ///
+  /// In pl, this message translates to:
+  /// **'Szukaj czujników tętna'**
+  String get button_discover_sensors;
+
+  /// No description provided for @button_nav_limits.
+  ///
+  /// In pl, this message translates to:
+  /// **'Pokaż tętno'**
+  String get button_nav_limits;
+
   /// No description provided for @failed_to_stop_monitoring.
   ///
   /// In pl, this message translates to:
@@ -199,6 +211,12 @@ abstract class AppLocalizations {
   /// In pl, this message translates to:
   /// **'Ustaw limity tętna'**
   String get limits_not_set;
+
+  /// No description provided for @button_show_sensors.
+  ///
+  /// In pl, this message translates to:
+  /// **'Pokaż listę czujników'**
+  String get button_show_sensors;
 
   /// No description provided for @battery_level_unknown.
   ///

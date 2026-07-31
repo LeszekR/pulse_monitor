@@ -16,9 +16,12 @@
   "ble_permission_missing": "Brak uprawnień do obsługi Bluetooth",
   "error_ble_connection_failed": "Połączenie Bluetooth nie udało się",
   "ble_disconnected": "Połączenie Bluetooth zostało przerwane",
+  "button_discover_sensors": "Szukaj czujników tętna",
+  "button_nav_limits": "Pokaż tętno",
 
   "failed_to_stop_monitoring": "Nie udało się przerwać monitorowania pulsu",
   "limits_not_set": "Ustaw limity tętna",
+  "button_show_sensors": "Pokaż listę czujników",
 
   "battery_level_unknown": "Stan baterii nieznany",
   "battery": "Bateria",

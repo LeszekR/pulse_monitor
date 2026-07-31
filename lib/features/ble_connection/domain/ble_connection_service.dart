@@ -1,7 +1,9 @@
 abstract interface class BleConnectionService {
-  Stream<String> startDiscoveringDevices();
+  Stream<String>? discoveredSensors;
 
-  void stopDiscoveringDevices();
+  Future<void> startDiscoveringHeartRateSensors();
+
+  Future<String> stopDiscoveringHeartRateSensors();
 
   bool connect();
 

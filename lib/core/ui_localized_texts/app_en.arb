@@ -16,9 +16,12 @@
   "ble_permission_missing": "Missing permission to connect with Bluetooth",
   "error_ble_connection_failed": "Bluetooth connection failed",
   "ble_disconnected": "Bluetooth connection was disconnected",
+  "button_discover_sensors": "Scan for heart rate sensors",
+  "button_nav_limits": "Show heart rate",
 
   "failed_to_stop_monitoring": "Failed to stop monitoring heart rate",
   "limits_not_set": "Set heart rate limits",
+  "button_show_sensors": "Show sensors list",
 
   "battery_level_unknown": "Battery level unknown",
   "battery": "Battery",

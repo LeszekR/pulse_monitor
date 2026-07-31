@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pulse_monitor/core/navigation/app_nav_commands.dart';
-import 'package:pulse_monitor/features/limits/device/battery_service_impl.dart';
-import 'package:pulse_monitor/features/limits/device/heart_rate_service_impl.dart';
+import 'package:pulse_monitor/features/ble_connection/domain/ble_connection_service.dart';
+import 'package:pulse_monitor/features/ble_connection/domain/ble_connection_service_exception.dart';
 import 'package:pulse_monitor/features/limits/domain/battery_service.dart';
 import 'package:pulse_monitor/features/limits/domain/heart_rate_service.dart';
 import 'package:pulse_monitor/features/limits/domain/limits_repository.dart';
@@ -14,13 +14,14 @@ import 'package:pulse_monitor/ui_components/dialogs/e_dialog_msg.dart';
 
 class LimitsBloc extends Bloc<LimitsEvent, LimitsState> {
   final BatteryService batteryService;
+  final BleConnectionService bleConnectionService;
   final HeartRateService heartRateService;
   final LimitsRepository limitsRepository;
   StreamSubscription<int>? _subscription;
 
-  LimitsBloc(this.batteryService, this.heartRateService, this.limitsRepository) : super(LimitsState()) {
+  LimitsBloc(this.batteryService, this.bleConnectionService, this.heartRateService, this.limitsRepository)
+    : super(LimitsState()) {
     on<CheckBatteryLevelEvent>(_checkBatteryLevel);
-    on<ConnectSensorEvent>(_connectHeartRateSensor);
     on<StartMonitoringEvent>(_startMonitoring);
     on<StopMonitoringEvent>(_stopMonitoring);
     on<ShowBleConnectionEvent>(_showBleConnection);
@@ -41,17 +42,6 @@ class LimitsBloc extends Bloc<LimitsEvent, LimitsState> {
     } else {
       emit(state.copyWith(batteryLevel: batteryLevel));
     }
-  }
-
-  Future<void> _connectHeartRateSensor(ConnectSensorEvent event, Emitter<LimitsState> emit) async {
-    final String deviceName = await heartRateService.startDiscoveringHeartRateSensors();
-    String deviceNameToShow = '';
-    if (deviceName.contains(HeartRateServiceImpl.platformException)) {
-      deviceNameToShow = 'Platform exception';
-    } else if (deviceName.contains(HeartRateServiceImpl.otherException)) {
-      deviceNameToShow = 'Other exception';
-    }
-    emit(state.copyWith(connectedBleSensor: deviceNameToShow));
   }
 
   Future<void> _saveLimits(SaveLimitsEvent event, Emitter<LimitsState> emit) async {

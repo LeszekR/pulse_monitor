@@ -4,7 +4,10 @@ sealed class LimitsEvent {
 
 class CheckBatteryLevelEvent extends LimitsEvent {}
 
-class ConnectSensorEvent extends LimitsEvent {}
+class ConnectSensorEvent extends LimitsEvent {
+  final String device;
+  const ConnectSensorEvent(this.device);
+}
 
 class SaveLimitsEvent extends LimitsEvent {}
 

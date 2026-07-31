@@ -18,6 +18,12 @@ class LimitsView extends StatelessWidget {
   final TextEditingController _lowerLimitController = TextEditingController();
   final TextEditingController _upperLimitController = TextEditingController();
 
+  static const Color white = Color.fromRGBO(247, 253, 247, 0.30196078431372547);
+  static const Color blue = Color.fromRGBO(109, 184, 246, 0.30196078431372547);
+  static const Color green = Color.fromRGBO(109, 246, 109, 0.30196078431372547);
+  static const Color pink = Color.fromRGBO(236, 71, 71, 0.30980392156862746);
+  static const Color yellow = Color.fromRGBO(248, 246, 142, 0.6274509803921569);
+
   LimitsView({super.key, required this.txt, required this.navigator, required this.appNavigator});
 
   @override
@@ -72,7 +78,7 @@ class LimitsView extends StatelessWidget {
                     children: [
                       Expanded(child: SizedBox()),
                       InkWell(
-                        onTap: () => _connectHeartRateSensor(bloc),
+                        onTap: () => _connectHeartRateSensor(bloc, 'mock id!'),
                         child: SizedBox(
                           width: 200,
                           height: 27,
@@ -162,10 +168,10 @@ class LimitsView extends StatelessWidget {
 
   Color _makeColor(HeartRateStatus level) {
     return switch (level) {
-      HeartRateStatus.none => Colors.white,
-      HeartRateStatus.tooLow => Colors.blue,
-      HeartRateStatus.ok => Colors.green,
-      HeartRateStatus.tooHigh => Colors.red,
+      HeartRateStatus.none => white,
+      HeartRateStatus.tooLow => blue,
+      HeartRateStatus.ok => green,
+      HeartRateStatus.tooHigh => pink,
     };
   }
 
@@ -202,24 +208,24 @@ class LimitsView extends StatelessWidget {
     } else {
       int level = int.parse(batteryLevel);
       return switch (level) {
-        >= 60 => Color.fromRGBO(20, 100, 20, 0.3),
-        <= 30 => Colors.pink,
-        _ => Colors.yellow,
+        >= 60 => green,
+        <= 30 => pink,
+        _ => yellow,
       };
     }
   }
 
-  void _connectHeartRateSensor(LimitsBloc bloc) {
-    bloc.add(ConnectSensorEvent());
+  void _connectHeartRateSensor(LimitsBloc bloc, String sensorId) {
+    bloc.add(ConnectSensorEvent(sensorId));
   }
 
   Color _getSensorColor(String? sensorDeviceName) {
     if (sensorDeviceName == null) {
-      return Color.fromRGBO(248, 241, 156, 0.7647058823529411);
+      return yellow;
     } else if (sensorDeviceName.contains('xception')) {
-      return Color.fromRGBO(236, 71, 71, 0.30980392156862746);
+      return pink;
     } else {
-      return Colors.white;
+      return white;
     }
   }
 
